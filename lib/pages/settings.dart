@@ -17,9 +17,11 @@ class _SettingsState extends State<Settings> {
     return Scaffold(
       appBar: AppBar(
 
-        title: Icon(Icons.account_balance_rounded, color: Colors.black,size: 20.0,),
+        title: Icon(Icons.account_balance_rounded, color: Colors.black,size: 20.0),
         centerTitle: true,
-
+        leading: IconButton(icon: Icon(Icons.arrow_back , color: Colors.black),onPressed: (){
+          Navigator.pop(context);
+        },),
         backgroundColor: Colors.white,
 
 

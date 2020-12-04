@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:location/location.dart';
+import 'package:latlong/latlong.dart';
 
 
 class Map extends StatefulWidget {
@@ -11,7 +13,9 @@ class Map extends StatefulWidget {
 
 
 
+
 class _MapState extends State<Map> {
+
 
   File _image;
   final picker = ImagePicker();
@@ -30,8 +34,6 @@ class _MapState extends State<Map> {
         });
       }
     }
-
-
 
 
   @override
@@ -53,12 +55,8 @@ class _MapState extends State<Map> {
 
         },),
       ),
-      body: GoogleMap(initialCameraPosition: CameraPosition(
-        target: LatLng(37.43296265331129, -122.08832357078792),
-        zoom: 19.151926040649414,
-      ),
-      ),
-
+      body: FlutterMap(options: MapOptions(minZoom: 10), layers: [TileLayerOptions(
+        urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",)],)
     );
   }
 }
