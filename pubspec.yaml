@@ -24,6 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   google_maps_flutter: ^1.0.6
+  image_picker: ^0.6.7+14
 
 
 

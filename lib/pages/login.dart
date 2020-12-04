@@ -85,11 +85,15 @@ class _LoginState extends State<Login> {
                   ),
                 ),
 
-                IconButton(icon: Icon(Icons.account_box_outlined, color: Colors.black,), onPressed: (){})
+                IconButton(icon: Icon(Icons.account_box_outlined, color: Colors.black,), onPressed: (){
+                  Navigator.popAndPushNamed(context, "/map");
+                })
               ],),
               SizedBox(height: 20.0),
               Center(
-                child: OutlineButton(onPressed: (){},
+                child: OutlineButton(onPressed: (){
+                  Navigator.popAndPushNamed(context, "/map");
+                },
                   child: Text("LOGIN"),
                   color: Colors.black,
                   borderSide: BorderSide(color: Colors.black),

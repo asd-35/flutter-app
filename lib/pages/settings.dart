@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
 
+
+
+
 class Settings extends StatefulWidget {
   @override
   _SettingsState createState() => _SettingsState();
 }
+
+
 
 class _SettingsState extends State<Settings> {
   @override
@@ -19,11 +24,32 @@ class _SettingsState extends State<Settings> {
 
 
       ),
-      body: Column(
-        children: <Widget> [
-          Text("USER:" , )
-        ],
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          children: <Widget> [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget> [
+                Text("USER :" , style: TextStyle(color: Colors.black, letterSpacing: 2.0)),
+                SizedBox(width: 20.0,),
+                Text("example@gmail.com" , style: TextStyle(color: Colors.grey)),
+              ],
+            ),
+            SizedBox(height: 40.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget> [
+                TextButton(onPressed: (){
+                  Navigator.popAndPushNamed(context, "/login");
+                }, child: Text("SIGN OUT", style: TextStyle(color: Colors.red , fontSize: 20))),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
 }
+
+
