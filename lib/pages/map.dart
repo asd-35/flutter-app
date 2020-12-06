@@ -1,20 +1,40 @@
 import 'dart:async';
-
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
-import 'package:image_picker/image_picker.dart';
-
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 
 class Map extends StatefulWidget {
   @override
-  _MapState createState() => _MapState();
+  State<Map> createState() => MapState();
 }
 
-class _MapState extends State<Map> {
-  Completer<GoogleMapController> _controller = Completer();
+class MapState extends State<Map> {
+  GoogleMapController mapController;
+  Location _location = Location();
+  LocationData _locationData;
   File _image;
   final picker = ImagePicker();
+
+  watchLocation() async {
+    _location.onLocationChanged.listen((LocationData currentLocation) {
+      LatLng latLng =
+          LatLng(currentLocation.latitude, currentLocation.longitude);
+      CameraUpdate cameraUpdate = CameraUpdate.newLatLngZoom(latLng, 15);
+      mapController.animateCamera(cameraUpdate);
+
+      setState(() {
+        this._locationData = currentLocation;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    watchLocation();
+  }
 
   Future getImage(bool cam) async {
     if (cam) {
@@ -29,55 +49,57 @@ class _MapState extends State<Map> {
     }
   }
 
-  Widget _buildGoogleMap(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height,
-      width: MediaQuery.of(context).size.width,
-      child: GoogleMap(
-        mapType: MapType.normal,
-        initialCameraPosition:
-            CameraPosition(target: LatLng(41.01224, 28.976018), zoom: 12),
-        onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
-        },
-      ),
-    );
-  }
-
+  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Icon(
-            Icons.account_balance_rounded,
-            color: Colors.black,
-            size: 20.0,
-          ),
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          actions: [
-            IconButton(
-              icon: Icon(Icons.apps_outlined),
-              onPressed: () {
-                Navigator.pushNamed(context, "/settings");
-              },
-              color: Colors.black,
-            ),
-          ],
-          leading: IconButton(
-            icon: Icon(
-              Icons.photo_camera_outlined,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              getImage(true);
-            },
-          ),
+      appBar: AppBar(
+        title: Icon(
+          Icons.account_balance_rounded,
+          color: Colors.black,
+          size: 20.0,
         ),
-        body: Stack(
-          children: <Widget>[
-            _buildGoogleMap(context),
-          ],
-        ));
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.apps_outlined),
+            onPressed: () {
+              Navigator.pushNamed(context, "/settings");
+            },
+            color: Colors.black,
+          ),
+        ],
+        leading: IconButton(
+          icon: Icon(
+            Icons.photo_camera_outlined,
+            color: Colors.black,
+          ),
+          onPressed: () {
+            getImage(true);
+          },
+        ),
+      ),
+      body: Stack(
+        children: <Widget>[
+          GoogleMap(
+              myLocationEnabled: true,
+              mapToolbarEnabled: true,
+              zoomControlsEnabled: false,
+              myLocationButtonEnabled: false,
+              mapType: MapType.normal,
+              initialCameraPosition: CameraPosition(
+                target: LatLng(this._locationData?.latitude ?? 6.7008168,
+                    this._locationData?.longitude ?? -1.6998494),
+                zoom: 14.4746,
+              ),
+              onMapCreated: (GoogleMapController controller) {
+                setState(() {
+                  mapController = controller;
+                });
+              }),
+        ],
+      ),
+    );
   }
 }
