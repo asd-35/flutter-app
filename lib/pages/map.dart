@@ -37,7 +37,8 @@ class MapState extends State<Map> {
     watchLocation();
     markers.add(Marker(markerId: MarkerId("1"), position: LatLng(38.2744,27.1799) , onTap: (){
       Navigator.pushNamed(context, '/info');
-    }));
+    },//daha teslik marker ekicelseniz buraya
+     ));
   }
 
   Future getImage(bool cam) async {
