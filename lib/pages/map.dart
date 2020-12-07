@@ -89,8 +89,8 @@ class MapState extends State<Map> {
               myLocationButtonEnabled: false,
               mapType: MapType.normal,
               initialCameraPosition: CameraPosition(
-                target: LatLng(this._locationData?.latitude ?? 6.7008168,
-                    this._locationData?.longitude ?? -1.6998494),
+                target: LatLng(this._locationData?.latitude ?? 41.015137,
+                    this._locationData?.longitude ?? 28.979530),
                 zoom: 14.4746,
               ),
               onMapCreated: (GoogleMapController controller) {
