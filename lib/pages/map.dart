@@ -16,6 +16,7 @@ class MapState extends State<Map> {
   LocationData _locationData;
   File _image;
   final picker = ImagePicker();
+  List<Marker> markers = [];
 
   watchLocation() async {
     _location.onLocationChanged.listen((LocationData currentLocation) {
@@ -34,6 +35,9 @@ class MapState extends State<Map> {
   void initState() {
     super.initState();
     watchLocation();
+    markers.add(Marker(markerId: MarkerId("1"), position: LatLng(38.2744,27.1799) , onTap: (){
+      Navigator.pushNamed(context, '/info');
+    }));
   }
 
   Future getImage(bool cam) async {
@@ -88,14 +92,17 @@ class MapState extends State<Map> {
               zoomControlsEnabled: false,
               myLocationButtonEnabled: false,
               mapType: MapType.normal,
+              markers: Set.from(markers),
+              
               initialCameraPosition: CameraPosition(
                 target: LatLng(this._locationData?.latitude ?? 6.7008168,
                     this._locationData?.longitude ?? -1.6998494),
                 zoom: 14.4746,
               ),
               onMapCreated: (GoogleMapController controller) {
-                setState(() {
+                setState(()  {
                   mapController = controller;
+
                 });
               }),
         ],

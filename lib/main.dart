@@ -1,5 +1,6 @@
 //import 'dart:js';
-
+import 'package:comm_app/pages/info.dart';
+import 'package:comm_app/pages/info.dart';
 import 'package:flutter/material.dart';
 import 'package:comm_app/pages/login.dart';
 import 'package:comm_app/pages/signup.dart';
@@ -13,5 +14,6 @@ void main() => runApp(MaterialApp(
         '/signup': (context) => Signup(),
         '/map': (context) => Map(),
         '/settings': (context) => Settings(),
+        '/info' : (context) => Info()
       },
     ));

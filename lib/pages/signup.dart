@@ -39,11 +39,19 @@ class _SignupState extends State<Signup> {
             ),
             SizedBox(height: 5.0),
             TextField(
+
               obscureText: false,
               decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Your name and surname',
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.all(Radius.circular(20.0))),
+
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.all(Radius.circular(20.0)))
+
               ),
+
               textInputAction: TextInputAction.next,
             ),
             SizedBox(height: 8.0),
@@ -58,9 +66,14 @@ class _SignupState extends State<Signup> {
             TextField(
               obscureText: false,
               keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Your e-mail',
+              decoration:  InputDecoration(
+            border: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.black),
+            borderRadius: BorderRadius.all(Radius.circular(20.0))),
+
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.all(Radius.circular(20.0)))
               ),
               textInputAction: TextInputAction.next,
             ),
@@ -75,9 +88,14 @@ class _SignupState extends State<Signup> {
             SizedBox(height: 5.0),
             TextField(
               obscureText: true,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Your password',
+              decoration:  InputDecoration(
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.all(Radius.circular(20.0))),
+
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.all(Radius.circular(20.0)))
               ),
               textInputAction: TextInputAction.next,
             ),
@@ -93,8 +111,13 @@ class _SignupState extends State<Signup> {
             TextField(
               obscureText: false,
               decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Your ID',
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.all(Radius.circular(20.0))),
+
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.all(Radius.circular(20.0)))
               ),
               textInputAction: TextInputAction.next,
             ),
@@ -129,19 +152,18 @@ class _SignupState extends State<Signup> {
                 },
               ),
             ),
-            new Container(
-              width: screenSize.width,
-              child: new RaisedButton(
-                child: new Text(
-                  'Sign Up',
-                  style: new TextStyle(color: Colors.black),
-                ),
-                onPressed: () {
-                  Navigator.popAndPushNamed(context, "/login");
-                },
-                color: Colors.grey[200],
-              ),
-            ),
+            Center(
+                child: OutlineButton(
+                  onPressed: () {
+                    Navigator.popAndPushNamed(context, "/login");
+                  },
+                  child: Text("SIGN UP"),
+                  color: Colors.black,
+                  borderSide: BorderSide(color: Colors.black),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0)),
+                  highlightedBorderColor: Colors.black,
+                )),
           ],
         ),
       ),
