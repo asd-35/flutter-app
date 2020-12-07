@@ -37,7 +37,7 @@ class MapState extends State<Map> {
     watchLocation();
     markers.add(Marker(markerId: MarkerId("1"), position: LatLng(38.2744,27.1799) , onTap: (){
       Navigator.pushNamed(context, '/info');
-    },//daha teslik marker ekicelseniz buraya
+    },//daha teslik marker ekicelseniz buray
      ));
   }
 
@@ -96,8 +96,8 @@ class MapState extends State<Map> {
               markers: Set.from(markers),
               
               initialCameraPosition: CameraPosition(
-                target: LatLng(this._locationData?.latitude ?? 6.7008168,
-                    this._locationData?.longitude ?? -1.6998494),
+                target: LatLng(this._locationData?.latitude ?? 41.015137,
+                    this._locationData?.longitude ?? 28.979530),
                 zoom: 14.4746,
               ),
               onMapCreated: (GoogleMapController controller) {

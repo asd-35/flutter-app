@@ -23,8 +23,70 @@ class _State extends State<Info> {
 
         ),
         body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget> [
-            SizedBox(width: 20,height: 20,)
+            SizedBox(height: 30,),
+            Center(
+
+              child: Text(
+                "COMPLAINT",
+                style: TextStyle(
+                  color: Colors.redAccent,
+                  letterSpacing: 1.0,
+                  fontSize: 20,
+                ),
+              ),
+            ),
+            Center(
+              child: Image(height: 350, width: 350,
+                image: NetworkImage("https://www.bingolonline.com/image/img/1/yol-medeniyet-ise_1359429660.jpg"),
+              ),
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget> [
+                SizedBox(width: 20,),
+                Text(
+                  "Image taken by :",
+                  style: TextStyle(
+                    color: Colors.black,
+                    letterSpacing: 1.0,
+                    fontSize: 20,
+                  ),
+                ),
+                Text(
+                  "Example Example",
+                  style: TextStyle(
+                    color: Colors.grey,
+                    letterSpacing: 1.0,
+                    fontSize: 15
+                    ,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 20,),
+            Row(
+              children: <Widget> [
+                SizedBox(width: 20,),
+                Text(
+                  "Description :",
+                  style: TextStyle(
+                    color: Colors.black,
+                    letterSpacing: 1.0,
+                    fontSize: 20,
+                  ),
+                ),
+              ],
+            ),
+            Text(
+              "gfdgdfgdfgfdfgdfgdgfdgdgfdgdfgdfg\ndfgdfgdfgdfgdfgdfgdfgdfgdfgdfgdgdf",
+              style: TextStyle(
+                color: Colors.grey,
+                letterSpacing: 1.0,
+                fontSize: 10,
+              ),
+            ),
           ],
         )
 

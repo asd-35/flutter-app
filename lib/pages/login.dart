@@ -118,7 +118,7 @@ class _LoginState extends State<Login> {
             Center(
                 child: OutlineButton(
               onPressed: () {
-                Navigator.popAndPushNamed(context, "/signup");
+                Navigator.pushNamed(context, "/signup");
               },
               child: Text("SIGN UP"),
               color: Colors.black,
