@@ -6,6 +6,7 @@ import 'package:comm_app/pages/login.dart';
 import 'package:comm_app/pages/signup.dart';
 import "package:comm_app/pages/map.dart";
 import "package:comm_app/pages/settings.dart";
+import 'package:comm_app/pages/submit.dart';
 
 void main() => runApp(MaterialApp(
       initialRoute: "/login",
@@ -14,6 +15,7 @@ void main() => runApp(MaterialApp(
         '/signup': (context) => Signup(),
         '/map': (context) => Map(),
         '/settings': (context) => Settings(),
-        '/info' : (context) => Info()
+        '/info' : (context) => Info(),
+        '/submit': (context) => Submit()
       },
     ));

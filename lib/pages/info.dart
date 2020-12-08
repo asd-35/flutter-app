@@ -79,13 +79,18 @@ class _State extends State<Info> {
                 ),
               ],
             ),
-            Text(
-              "gfdgdfgdfgfdfgdfgdgfdgdgfdgdfgdfg\ndfgdfgdfgdfgdfgdfgdfgdfgdfgdfgdgdf",
-              style: TextStyle(
-                color: Colors.grey,
-                letterSpacing: 1.0,
-                fontSize: 10,
-              ),
+            Row(
+              children: <Widget> [
+                SizedBox(width: 20,),
+                Text(
+                  "dasdadadadaddasdadadadada\ndsadasdadadasdadsa",
+                  style: TextStyle(
+                    color: Colors.grey,
+                    letterSpacing: 1.0,
+                    fontSize: 15,
+                  ),
+                ),
+              ],
             ),
           ],
         )
