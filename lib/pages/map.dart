@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
+import 'dart:io';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
@@ -13,10 +15,14 @@ class MapState extends State<Map> {
   GoogleMapController mapController;
   Location _location = Location();
   LocationData _locationData;
+  File _image;
+  final picker = ImagePicker();
   List<Marker> markers = [];
+  bool submit;
 
+  Widget createSubmitForm(File img){
 
-
+  }
   watchLocation() async {
     _location.onLocationChanged.listen((LocationData currentLocation) {
       LatLng latLng =
@@ -40,9 +46,27 @@ class MapState extends State<Map> {
      ));
   }
 
+  Future getImage(bool cam) async {
+    if (cam) {
+      final picked = await picker.getImage(source: ImageSource.camera);
 
+      setState(() {
+        if (picked != null) {
+          print("photo taken");
+          _image = File(picked.path);
 
+          submit = true;
+        } else {
+          print('Photo was not taken');
+          submit = false;
+          print(submit);
+        }
+      });
+    }
 
+  }
+
+  @override
   @override
   Widget build(BuildContext context) {
 
@@ -69,8 +93,15 @@ class MapState extends State<Map> {
             Icons.photo_camera_outlined,
             color: Colors.black,
           ),
-          onPressed: () {
-              Navigator.pushNamed(context,"/submit");
+          onPressed: () async {
+            await getImage(true);
+
+            if (submit) {
+              Navigator.pushNamed(context,"/submit",arguments: {
+                "img" : _image
+              });
+              submit = false;
+            }
           },
         ),
       ),

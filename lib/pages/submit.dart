@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+
 
 
 class Submit extends StatefulWidget {
@@ -11,34 +11,12 @@ class Submit extends StatefulWidget {
 
 
 class _SubmitState extends State<Submit> {
-  File _image = File("");
-  final picker = ImagePicker();
 
-  Future getImage(bool cam) async {
-    if (cam) {
-      final picked = await picker.getImage(source: ImageSource.camera);
-
-      setState(() {
-        if (picked != null) {
-          print("photo taken");
-          _image = File(picked.path);
-        } else {
-          print('Photo was not taken');
-          Navigator.popAndPushNamed(context, "/map");
-        }
-      });
-    }
-  }
-
-  @override
-  void initState() {
-    getImage(true);
-    super.initState();
-
-  }
+  Map data = {};
 
   @override
   Widget build(BuildContext context) {
+    data = ModalRoute.of(context).settings.arguments;
     return Scaffold(
         appBar: AppBar(
 
@@ -54,10 +32,8 @@ class _SubmitState extends State<Submit> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget> [
             Center(
-              child:
-                Image.file(_image ,height: 350,width: 350,),
+              child: Image.file(data["img"], height: 350, width: 350,)
             ),
-            SizedBox(height: 30,),
             Center(
               child: Text(
                 "COMPLAINT MESSAGE",
