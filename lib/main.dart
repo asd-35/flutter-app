@@ -1,5 +1,3 @@
-//import 'dart:js';
-import 'package:comm_app/pages/info.dart';
 import 'package:comm_app/pages/info.dart';
 import 'package:flutter/material.dart';
 import 'package:comm_app/pages/login.dart';
@@ -7,6 +5,8 @@ import 'package:comm_app/pages/signup.dart';
 import "package:comm_app/pages/map.dart";
 import "package:comm_app/pages/settings.dart";
 import 'package:comm_app/pages/submit.dart';
+
+/* v0.35 */
 
 void main() => runApp(MaterialApp(
       initialRoute: "/login",

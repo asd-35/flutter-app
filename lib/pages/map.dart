@@ -20,9 +20,7 @@ class MapState extends State<Map> {
   List<Marker> markers = [];
   bool submit;
 
-  Widget createSubmitForm(File img){
 
-  }
   watchLocation() async {
     _location.onLocationChanged.listen((LocationData currentLocation) {
       LatLng latLng =

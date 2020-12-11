@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:comm_app/pages/database.dart';
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
@@ -8,6 +8,13 @@ class Login extends StatefulWidget {
 bool secureText = true;
 
 class _LoginState extends State<Login> {
+  Data db = Data();
+
+  void initState() {
+    Data().createDB();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
