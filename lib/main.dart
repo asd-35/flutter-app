@@ -5,8 +5,9 @@ import 'package:comm_app/pages/signup.dart';
 import "package:comm_app/pages/map.dart";
 import "package:comm_app/pages/settings.dart";
 import 'package:comm_app/pages/submit.dart';
+import "package:comm_app/pages/loading.dart";
 
-/* v0.35 */
+/* v0.37 */
 
 void main() => runApp(MaterialApp(
       initialRoute: "/login",
@@ -16,6 +17,7 @@ void main() => runApp(MaterialApp(
         '/map': (context) => Map(),
         '/settings': (context) => Settings(),
         '/info' : (context) => Info(),
-        '/submit': (context) => Submit()
+        '/submit': (context) => Submit(),
+        '/loading': (context) => Loading()
       },
     ));

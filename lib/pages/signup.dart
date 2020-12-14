@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import "package:comm_app/pages/database.dart";
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 enum genders { Female, Male }
 
@@ -8,7 +10,14 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
-  genders _genders = genders.Female;
+
+  genders _genders;
+  var db = new Data();
+  var fillFormsCheck = 0;
+  final mailCon = new TextEditingController();
+  final passwordCon = new TextEditingController();
+  final nickCon = new TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -16,14 +25,20 @@ class _SignupState extends State<Signup> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Sign Up",
-            style: TextStyle(color: Colors.black, fontSize: 25.0)),
+        title: Center(
+          child: const Text("Sign Up",
+              style: TextStyle(color: Colors.black, fontSize: 25.0)),
+        ),
         toolbarHeight: 70.0,
         elevation: 1.0,
         backgroundColor: Colors.white,
+
         actions: <Widget>[
-          Icon(Icons.account_balance_rounded, color: Colors.black, size: 50.0),
+          Icon(Icons.account_balance_rounded, color: Colors.black, size: 30.0),
         ],
+        leading: IconButton(icon: Icon(Icons.arrow_back , color: Colors.black),onPressed: (){
+          Navigator.pop(context);
+        },),
       ),
       body: Padding(
         padding: EdgeInsets.all(50.0),
@@ -31,7 +46,7 @@ class _SignupState extends State<Signup> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              "NAME & SURNAME",
+              "NICKNAME",
               style: TextStyle(
                 color: Colors.black,
                 letterSpacing: 1.0,
@@ -39,7 +54,7 @@ class _SignupState extends State<Signup> {
             ),
             SizedBox(height: 5.0),
             TextField(
-
+              controller: nickCon,
               obscureText: false,
               decoration: InputDecoration(
                   border: OutlineInputBorder(
@@ -64,6 +79,7 @@ class _SignupState extends State<Signup> {
             ),
             SizedBox(height: 5.0),
             TextField(
+              controller: mailCon,
               obscureText: false,
               keyboardType: TextInputType.emailAddress,
               decoration:  InputDecoration(
@@ -87,6 +103,7 @@ class _SignupState extends State<Signup> {
             ),
             SizedBox(height: 5.0),
             TextField(
+              controller: passwordCon,
               obscureText: true,
               decoration:  InputDecoration(
                   border: OutlineInputBorder(
@@ -100,7 +117,7 @@ class _SignupState extends State<Signup> {
               textInputAction: TextInputAction.next,
             ),
             SizedBox(height: 8.0),
-            Text(
+            /*Text(
               "ID",
               style: TextStyle(
                 color: Colors.black,
@@ -120,7 +137,7 @@ class _SignupState extends State<Signup> {
                       borderRadius: BorderRadius.all(Radius.circular(20.0)))
               ),
               textInputAction: TextInputAction.next,
-            ),
+            ),*/
             SizedBox(height: 8.0),
             Text("GENDER",
                 style: TextStyle(
@@ -154,8 +171,23 @@ class _SignupState extends State<Signup> {
             ),
             Center(
                 child: OutlineButton(
-                  onPressed: () {
-                    Navigator.popAndPushNamed(context, "/login");
+                  onPressed: () async {
+                    //Navigator.popAndPushNamed(context, "/login");
+                   // print(_genders.toString().substring(8));
+                    if(nickCon.text != "" && passwordCon.text != "" && mailCon.text != "" && _genders != null)
+                      {
+                        setState(() {
+                          fillFormsCheck = 2;
+                        });
+                        await db.signUser(nickCon.text, mailCon.text, passwordCon.text, _genders.toString().substring(8));
+                        Navigator.popAndPushNamed(context, "/login");
+                      }
+                      else
+                        {
+                          setState(() {
+                            fillFormsCheck = 1;
+                          });
+                        }
                   },
                   child: Text("SIGN UP"),
                   color: Colors.black,
@@ -164,6 +196,13 @@ class _SignupState extends State<Signup> {
                       borderRadius: BorderRadius.circular(10.0)),
                   highlightedBorderColor: Colors.black,
                 )),
+            SizedBox(height: 20,),
+            Center(
+              child : fillFormsCheck == 1 ? Text("Please fill all the forms given " , style: TextStyle(color: Colors.red, fontSize: 20),):null
+            ),
+            Center(
+                child : fillFormsCheck == 2 ? SpinKitFadingCircle(color: Colors.black, size: 50.0,):null
+            )
           ],
         ),
       ),

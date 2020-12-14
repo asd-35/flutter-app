@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:comm_app/pages/database.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import "package:comm_app/pages/database.dart";
+
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
@@ -8,10 +10,17 @@ class Login extends StatefulWidget {
 bool secureText = true;
 
 class _LoginState extends State<Login> {
-  Data db = Data();
+
+
+  var checking = 0;
+  var db = new Data();
+  final mailCon = new TextEditingController();
+  final passwordCon = new TextEditingController();
+
+  var loading = SpinKitFadingCircle(color: Colors.black, size: 50.0,);
 
   void initState() {
-    Data().createDB();
+
     super.initState();
   }
 
@@ -40,6 +49,7 @@ class _LoginState extends State<Login> {
             ),
             SizedBox(height: 20.0),
             TextField(
+              controller: mailCon,
               decoration: InputDecoration(
                   hintText: "Your E-mail",
                   border: OutlineInputBorder(
@@ -65,6 +75,7 @@ class _LoginState extends State<Login> {
             ),
             SizedBox(height: 20),
             TextField(
+              controller: passwordCon,
               decoration: InputDecoration(
                   hintText: "Password",
                   border: OutlineInputBorder(
@@ -104,15 +115,33 @@ class _LoginState extends State<Login> {
                       color: Colors.black,
                     ),
                     onPressed: () {
-                      Navigator.popAndPushNamed(context, "/map");
+                      Navigator.popAndPushNamed(context, "/map",arguments: {
+                        "accType" : "anon"
+                      });
                     })
               ],
             ),
             SizedBox(height: 20.0),
             Center(
                 child: OutlineButton(
-              onPressed: () {
-                Navigator.popAndPushNamed(context, "/map");
+              onPressed: () async {
+                mailCon.text;
+                passwordCon.text;
+                setState(() {
+                  checking = 1;
+                });
+                 var result = await db.UserCheck(mailCon.text, passwordCon.text);
+                 if(result == true){
+                   Navigator.popAndPushNamed(context, "/map" ,arguments: {
+                     "_id": db.id,
+                     "accType" : "signed"
+                   });
+                 }else
+                   {
+                     setState(() {
+                       checking = 2;
+                     });
+                   }
               },
               child: Text("LOGIN"),
               color: Colors.black,
@@ -133,7 +162,18 @@ class _LoginState extends State<Login> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10.0)),
               highlightedBorderColor: Colors.black,
-            )),
+            )
+            ),
+                SizedBox(height: 20.0),
+                Center(
+                  child: checking == 1 ? loading:null ,
+                ),
+                Center(
+                  child: checking == 2 ? Text("E-mail or password wrong " , style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 20,
+                  ),):null ,
+                ),
           ]),
         ));
   }
