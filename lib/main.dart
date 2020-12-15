@@ -7,7 +7,7 @@ import "package:comm_app/pages/settings.dart";
 import 'package:comm_app/pages/submit.dart';
 import "package:comm_app/pages/loading.dart";
 
-/* v0.37 */
+/* v1.00 */
 
 void main() => runApp(MaterialApp(
       initialRoute: "/login",
@@ -18,6 +18,5 @@ void main() => runApp(MaterialApp(
         '/settings': (context) => Settings(),
         '/info' : (context) => Info(),
         '/submit': (context) => Submit(),
-        '/loading': (context) => Loading()
       },
     ));

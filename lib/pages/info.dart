@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 
@@ -8,8 +10,13 @@ class Info extends StatefulWidget {
 }
 
 class _State extends State<Info> {
+  var data;
+
+
   @override
   Widget build(BuildContext context) {
+    data = ModalRoute.of(context).settings.arguments;
+
     return Scaffold(
         appBar: AppBar(
 
@@ -39,7 +46,7 @@ class _State extends State<Info> {
             ),
             Center(
               child: Image(height: 350, width: 350,
-                image: NetworkImage("https://www.bingolonline.com/image/img/1/yol-medeniyet-ise_1359429660.jpg"),
+                image: data["image"],
               ),
             ),
             Row(
@@ -55,7 +62,7 @@ class _State extends State<Info> {
                   ),
                 ),
                 Text(
-                  "Example Example",
+                  data["user"],
                   style: TextStyle(
                     color: Colors.grey,
                     letterSpacing: 1.0,
@@ -83,7 +90,7 @@ class _State extends State<Info> {
               children: <Widget> [
                 SizedBox(width: 20,),
                 Text(
-                  "dasdadadadaddasdadadadada\ndsadasdadadasdadsa",
+                  data["description"],
                   style: TextStyle(
                     color: Colors.grey,
                     letterSpacing: 1.0,

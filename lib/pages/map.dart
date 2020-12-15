@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'dart:convert';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-
+import 'package:comm_app/pages/database.dart';
 
 class Map extends StatefulWidget {
   @override
@@ -15,11 +17,13 @@ class MapState extends State<Map> {
   GoogleMapController mapController;
   Location _location = Location();
   LocationData _locationData;
-  File _image;
+  var _image;
   final picker = ImagePicker();
-  List<Marker> markers = [];
+  List<Marker> map = [];
   bool submit;
-
+  var data;
+  var _cmpressed_image;
+  var db = new Data();
 
   watchLocation() async {
     _location.onLocationChanged.listen((LocationData currentLocation) {
@@ -34,25 +38,52 @@ class MapState extends State<Map> {
     });
   }
 
+  Future<void> getMark() async {
+
+    var temp = await db.getMarkers();
+
+    for(var value in temp)
+    {
+      print(value["lat"]);
+      print(value["lon"]);
+      print(value["_id"]);
+
+      map.add(Marker(markerId: MarkerId(value["_id"].toString()), position: LatLng(double.parse(value["lat"]),double.parse(value["lon"])) , onTap: (){
+        Navigator.pushNamed(context, '/info', arguments: {
+          "user": value["user"],
+          "image": MemoryImage(base64Decode(value["image"]["data"])),
+          "description": value["description"],});
+      },
+      ));
+    }
+
+  }
+
+
   @override
   void initState() {
     super.initState();
+    getMark();
     watchLocation();
-    markers.add(Marker(markerId: MarkerId("1"), position: LatLng(38.2744,27.1799) , onTap: (){
-      Navigator.pushNamed(context, '/info');
-    },
-     ));
+
   }
 
   Future getImage(bool cam) async {
     if (cam) {
       final picked = await picker.getImage(source: ImageSource.camera);
 
+
+        _cmpressed_image = await FlutterImageCompress.compressWithFile(
+            picked.path,
+            format: CompressFormat.jpeg,
+            quality: 70
+        );
+
+
       setState(() {
         if (picked != null) {
           print("photo taken");
           _image = File(picked.path);
-
           submit = true;
         } else {
           print('Photo was not taken');
@@ -64,9 +95,12 @@ class MapState extends State<Map> {
 
   }
 
-  @override
+
   @override
   Widget build(BuildContext context) {
+    data = ModalRoute.of(context).settings.arguments;
+
+
 
     return Scaffold(
       appBar: AppBar(
@@ -81,7 +115,7 @@ class MapState extends State<Map> {
           IconButton(
             icon: Icon(Icons.apps_outlined),
             onPressed: () {
-              Navigator.pushNamed(context, "/settings");
+              Navigator.popAndPushNamed(context, "/settings",arguments: data);
             },
             color: Colors.black,
           ),
@@ -96,7 +130,13 @@ class MapState extends State<Map> {
 
             if (submit) {
               Navigator.pushNamed(context,"/submit",arguments: {
-                "img" : _image
+                "img" : _image,
+                "imgC" : _cmpressed_image,
+                "lat": this._locationData.latitude.toString(),
+                "lon": this._locationData.longitude.toString(),
+                "accType": data["accType"],
+                "_id" : data["_id"],
+                "user": data["email"]
               });
               submit = false;
             }
@@ -111,7 +151,7 @@ class MapState extends State<Map> {
               zoomControlsEnabled: false,
               myLocationButtonEnabled: false,
               mapType: MapType.normal,
-              markers: Set.from(markers),
+              markers: Set.from(map),
 
               initialCameraPosition: CameraPosition(
                 target: LatLng(this._locationData?.latitude ?? 41.015137,

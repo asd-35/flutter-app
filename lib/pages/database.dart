@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:mongo_dart/mongo_dart.dart';
 
 
@@ -5,14 +6,15 @@ class Data{
 
   var id;
   var state = 0;
-
+  var mail;
+  var url = "key";
   Data();
 
   Future<bool> UserCheck(user,password) async
   {
-    final db = await Db.create("key");
+    final db = await Db.create(url);
     print("setting up...");
-    await db.open();
+    await db.open(secure: true);
     print("its on!");
     DbCollection collUser = db.collection("users");
     //DbCollection collMark = db.collection("markers");
@@ -22,6 +24,7 @@ class Data{
       if (tempUser["username"] == user && tempUser["password"] == password) {
         print("eyoo");
         id = tempUser["_id"];
+        mail = tempUser["username"];
         tempUser = null;
         return true;
       }
@@ -36,9 +39,9 @@ class Data{
 
   Future signUser(nickname,user,password,gender) async
   {
-    final db = await Db.create("key");
+    final db = await Db.create(url);
     print("setting up...");
-    await db.open();
+    await db.open(secure:true);
     print("its on!");
 
     DbCollection collUser = db.collection("users");
@@ -49,5 +52,50 @@ class Data{
       "gender": gender
     });
     print("sign up complete");
+    db.close();
+  }
+
+  Future addMarker(id,user,description,image,lat,lon) async
+  {
+    final db = await Db.create(url);
+    print("setting up...");
+    await db.open(secure: true);
+    print("its on!");
+
+    DbCollection collMark = db.collection("markers");
+    print(description);
+    print(image);
+    print(lat);
+    print(lon);
+    Map<String,dynamic> img = {
+      "data": base64Encode(image)
+
+    };
+    await collMark.save({
+      "user": user,
+      "image": img,
+      "lat": lat,
+      "lon": lon,
+      "description": description,
+      "user_id": id
+    });
+
+
+    db.close();
+  }
+
+  Future<Set> getMarkers() async
+  {
+    final db = await Db.create(url);
+    print("setting up...");
+    await db.open(secure: true);
+    print("its on!");
+
+    DbCollection collMark = db.collection("markers");
+
+    var result;
+    result = await collMark.find().toSet();
+
+    return result;
   }
 }

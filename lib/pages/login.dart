@@ -116,7 +116,9 @@ class _LoginState extends State<Login> {
                     ),
                     onPressed: () {
                       Navigator.popAndPushNamed(context, "/map",arguments: {
-                        "accType" : "anon"
+                        "accType" : "anon",
+                        "email": "anonymous",
+                        "_id": "None",
                       });
                     })
               ],
@@ -134,7 +136,8 @@ class _LoginState extends State<Login> {
                  if(result == true){
                    Navigator.popAndPushNamed(context, "/map" ,arguments: {
                      "_id": db.id,
-                     "accType" : "signed"
+                     "accType" : "signed",
+                     "email": db.mail
                    });
                  }else
                    {

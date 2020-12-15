@@ -1,6 +1,6 @@
-import 'dart:io';
+import 'package:comm_app/pages/database.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 
 class Submit extends StatefulWidget {
@@ -13,6 +13,9 @@ class Submit extends StatefulWidget {
 class _SubmitState extends State<Submit> {
 
   Map data = {};
+  var db = new Data();
+  var submitState = 0;
+  var submitCon = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +26,10 @@ class _SubmitState extends State<Submit> {
           title: Icon(Icons.account_balance_rounded, color: Colors.black,size: 20.0),
           centerTitle: true,
           leading: IconButton(icon: Icon(Icons.arrow_back , color: Colors.black),onPressed: (){
-            Navigator.pop(context);
+             Navigator.popAndPushNamed(context,"/map", arguments: {
+               "email": data["user"],
+               "_id": data["_id"]
+             });
           },),
           backgroundColor: Colors.white,
         ),
@@ -51,6 +57,7 @@ class _SubmitState extends State<Submit> {
 
 
                   child: TextField(
+                    controller: submitCon,
                     decoration: InputDecoration(
                         hintText: "Your Complaint",
 
@@ -70,8 +77,16 @@ class _SubmitState extends State<Submit> {
             SizedBox(height: 5,),
             Center(
                 child: OutlineButton(
-                  onPressed: () {
-                    Navigator.popAndPushNamed(context, "/map");
+                  onPressed: () async {
+                    setState(() {
+                      submitState = 1;
+                    });
+
+                    await db.addMarker(data["_id"],data["user"],submitCon.text, data["imgC"], data["lat"].toString(), data["lon"].toString());
+                    Navigator.popAndPushNamed(context, "/map" , arguments: {
+                      "email": data["user"],
+                      "_id": data["_id"]
+                    });
                   },
                   child: Text("REPORT IT"),
                   color: Colors.black,
@@ -80,6 +95,10 @@ class _SubmitState extends State<Submit> {
                       borderRadius: BorderRadius.circular(10.0)),
                   highlightedBorderColor: Colors.black,
                 )),
+            SizedBox(height: 20,),
+            Center(
+              child: submitState == 1 ? SpinKitFadingCircle(color: Colors.black, size: 50.0,):null,
+            ),
           ],
         ),
     );
