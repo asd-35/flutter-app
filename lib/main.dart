@@ -5,7 +5,7 @@ import 'package:comm_app/pages/signup.dart';
 import "package:comm_app/pages/map.dart";
 import "package:comm_app/pages/settings.dart";
 import 'package:comm_app/pages/submit.dart';
-import "package:comm_app/pages/loading.dart";
+
 
 /* v1.00 */
 
