@@ -17,6 +17,7 @@ class _SignupState extends State<Signup> {
   final mailCon = new TextEditingController();
   final passwordCon = new TextEditingController();
   final nickCon = new TextEditingController();
+  final idCon = new TextEditingController();
 
 
   @override
@@ -117,7 +118,7 @@ class _SignupState extends State<Signup> {
               textInputAction: TextInputAction.next,
             ),
             SizedBox(height: 8.0),
-            /*Text(
+            Text(
               "ID",
               style: TextStyle(
                 color: Colors.black,
@@ -126,6 +127,7 @@ class _SignupState extends State<Signup> {
             ),
             SizedBox(height: 5.0),
             TextField(
+              controller: idCon,
               obscureText: false,
               decoration: InputDecoration(
                   border: OutlineInputBorder(
@@ -137,7 +139,7 @@ class _SignupState extends State<Signup> {
                       borderRadius: BorderRadius.all(Radius.circular(20.0)))
               ),
               textInputAction: TextInputAction.next,
-            ),*/
+            ),
             SizedBox(height: 8.0),
             Text("GENDER",
                 style: TextStyle(
@@ -174,12 +176,12 @@ class _SignupState extends State<Signup> {
                   onPressed: () async {
                     //Navigator.popAndPushNamed(context, "/login");
                    // print(_genders.toString().substring(8));
-                    if(nickCon.text != "" && passwordCon.text != "" && mailCon.text != "" && _genders != null)
+                    if(nickCon.text != "" && passwordCon.text != "" && mailCon.text != "" && _genders != null && idCon.text != null)
                       {
                         setState(() {
                           fillFormsCheck = 2;
                         });
-                        await db.signUser(nickCon.text, mailCon.text, passwordCon.text, _genders.toString().substring(8));
+                        await db.signUser(nickCon.text, mailCon.text, passwordCon.text, _genders.toString().substring(8),idCon.text);
                         Navigator.popAndPushNamed(context, "/login");
                       }
                       else

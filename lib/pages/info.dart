@@ -1,8 +1,4 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-
-
 
 class Info extends StatefulWidget {
   @override
@@ -16,7 +12,7 @@ class _State extends State<Info> {
   @override
   Widget build(BuildContext context) {
     data = ModalRoute.of(context).settings.arguments;
-
+    print(data);
     return Scaffold(
         appBar: AppBar(
 

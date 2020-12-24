@@ -42,19 +42,21 @@ class MapState extends State<Map> {
 
     var temp = await db.getMarkers();
 
-    for(var value in temp)
-    {
-      print(value["lat"]);
-      print(value["lon"]);
-      print(value["_id"]);
+    for(var value in temp) {
+      if (value["isMarked"] == "1") {
 
-      map.add(Marker(markerId: MarkerId(value["_id"].toString()), position: LatLng(double.parse(value["lat"]),double.parse(value["lon"])) , onTap: (){
-        Navigator.pushNamed(context, '/info', arguments: {
-          "user": value["user"],
-          "image": MemoryImage(base64Decode(value["image"]["data"])),
-          "description": value["description"],});
-      },
-      ));
+      } else{
+        map.add(Marker(markerId: MarkerId(value["_id"].toString()),
+          position: LatLng(
+              double.parse(value["lat"]), double.parse(value["lon"])),
+          onTap: () {
+            Navigator.pushNamed(context, '/info', arguments: {
+              "user": value["user"],
+              "image": MemoryImage(base64Decode(value["image"]["data"])),
+              "description": value["description"],});
+          },
+        ));
+    }
     }
 
   }

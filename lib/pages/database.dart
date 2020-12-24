@@ -24,7 +24,7 @@ class Data{
       if (tempUser["username"] == user && tempUser["password"] == password) {
         print("eyoo");
         id = tempUser["_id"];
-        mail = tempUser["username"];
+        mail = tempUser["nickname"];
         tempUser = null;
         return true;
       }
@@ -37,7 +37,7 @@ class Data{
 
   }
 
-  Future signUser(nickname,user,password,gender) async
+  Future signUser(nickname,user,password,gender,id) async
   {
     final db = await Db.create(url);
     print("setting up...");
@@ -49,7 +49,8 @@ class Data{
       "username": user,
       "password": password,
       "nickname": nickname,
-      "gender": gender
+      "gender": gender,
+      "social_id": id
     });
     print("sign up complete");
     db.close();
@@ -77,7 +78,8 @@ class Data{
       "lat": lat,
       "lon": lon,
       "description": description,
-      "user_id": id
+      "user_id": id,
+      "isMarked": "0"
     });
 
 

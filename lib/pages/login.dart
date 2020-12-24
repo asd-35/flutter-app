@@ -100,7 +100,7 @@ class _LoginState extends State<Login> {
               obscureText: secureText,
             ),
             SizedBox(height: 20.0),
-            Row(
+                /* Row(
               children: <Widget>[
                 Text(
                   " Continue as anonymous ----------->",
@@ -122,7 +122,7 @@ class _LoginState extends State<Login> {
                       });
                     })
               ],
-            ),
+            ),*/
             SizedBox(height: 20.0),
             Center(
                 child: OutlineButton(
@@ -137,7 +137,8 @@ class _LoginState extends State<Login> {
                    Navigator.popAndPushNamed(context, "/map" ,arguments: {
                      "_id": db.id,
                      "accType" : "signed",
-                     "email": db.mail
+                     "email": db.mail,
+
                    });
                  }else
                    {
